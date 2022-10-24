@@ -102,7 +102,13 @@ const Text = styled.div`
   margin: 20px;
 `;
 
-function UserCard({ img, name, hook }) {
+interface UserCardProps {
+  name: string;
+  hook: (value: number) => void;
+  img: string;
+}
+
+function UserCard({ img, name, hook }: UserCardProps) {
   return (
     <Container>
       <Content>

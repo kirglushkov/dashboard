@@ -1,9 +1,23 @@
 import styled from "@emotion/styled";
 import React, { useState } from "react";
-
+import Study from "../assets/icon-study.svg";
+import Work from "../assets/icon-work.svg";
+import Play from "../assets/icon-play.svg";
+import Exercise from "../assets/icon-exercise.svg";
+import Social from "../assets/icon-social.svg";
+import SelfCare from "../assets/icon-selfcare.svg";
 import SVG from "react-inlinesvg";
 
-const COLORS = {
+type ColorProps = {
+  Work: string;
+  Play: string;
+  Study: string;
+  Exercise: string;
+  Social: string;
+  SelfCare: string;
+};
+
+const COLORS: ColorProps = {
   Work: "hsl(15, 100%, 70%)",
   Play: "hsl(195, 74%, 62%)",
   Study: "hsl(348, 100%, 68%)",
@@ -12,8 +26,16 @@ const COLORS = {
   SelfCare: "hsl(43, 84%, 65%)",
 };
 
-const PRIMARY_COLOR = "#1D204B";
+interface CardProps {
+  title: string;
+  timeframes: {
+    current: number;
+    previous: number;
+  };
+  time: string;
+}
 
+const PRIMARY_COLOR = "#1D204B";
 const BORDER_RADIUS = "20px";
 
 const Container = styled.div`
@@ -22,7 +44,7 @@ const Container = styled.div`
   width: 350px;
   height: 250px;
   border-radius: ${BORDER_RADIUS};
-  background-color: ${(props) => COLORS[props.color]};
+  background-color: ${(props) => COLORS[props.color as keyof ColorProps]};
   position: relative;
 
   @media (max-width: 500px) {
@@ -54,14 +76,6 @@ const StyledIMG = styled(SVG)`
   right: 20px;
   position: absolute;
 `;
-
-import Study from "../assets/icon-study.svg";
-import Work from "../assets/icon-work.svg";
-import Play from "../assets/icon-play.svg";
-import Exercise from "../assets/icon-exercise.svg";
-import Social from "../assets/icon-social.svg";
-import SelfCare from "../assets/icon-selfcare.svg";
-
 const Text = styled.div`
   display: flex;
   flex-direction: column;
@@ -109,7 +123,7 @@ const Timer = styled.div`
   }
 `;
 
-function Card({ title, timeframes, time }) {
+function Card({ title, timeframes, time }: CardProps) {
   return (
     <Container color={title}>
       <StyledIMG

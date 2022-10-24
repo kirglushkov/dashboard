@@ -43,7 +43,7 @@ import Data from "../data.json";
 function App() {
   const [active, setActive] = useState(0);
 
-  function ChangeState(x) {
+  function ChangeState(x: number) {
     setActive(x);
   }
 
