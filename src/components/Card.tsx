@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useState } from "react";
 
 import SVG from "react-inlinesvg";
 
@@ -12,30 +12,41 @@ const COLORS = {
   SelfCare: "hsl(43, 84%, 65%)",
 };
 
-const PRIMARY_COLOR = "hsl(246, 80%, 60%)";
+const PRIMARY_COLOR = "#1D204B";
 
 const BORDER_RADIUS = "20px";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 250px;
+  width: 350px;
   height: 250px;
   border-radius: ${BORDER_RADIUS};
   background-color: ${(props) => COLORS[props.color]};
   position: relative;
+
+  @media (max-width: 500px) {
+    width: 350px;
+    height: 180px;
+  }
 `;
 
 const Content = styled.div`
   width: 100%;
-  height: 200px;
+  height: 80%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   border-radius: ${BORDER_RADIUS};
   background-color: ${PRIMARY_COLOR};
   bottom: 0;
   position: absolute;
+
+  &:hover {
+    background-color: #1d304b;
+  }
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
 `;
 
 const StyledIMG = styled(SVG)`
@@ -51,7 +62,54 @@ import Exercise from "../assets/icon-exercise.svg";
 import Social from "../assets/icon-social.svg";
 import SelfCare from "../assets/icon-selfcare.svg";
 
-function Card({ title, timeframes }) {
+const Text = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 30px;
+  gap: 20px;
+`;
+
+const Title = styled.div`
+  font-size: 18px;
+  font-weight: 600;
+`;
+
+const Time = styled.div`
+  font-size: 48px;
+  font-weight: 300;
+
+  @media (max-width: 500px) {
+    font-size: 32px;
+    font-weight: 300;
+    width: 100%;
+    align-self: center;
+  }
+`;
+const TimeSpan = styled.div`
+  opacity: 0.5;
+  font-weight: 300;
+
+  @media (max-width: 500px) {
+    width: 100%;
+    white-space: nowrap;
+    text-align: center;
+    align-self: center;
+  }
+`;
+
+const Timer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  @media (max-width: 500px) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+`;
+
+function Card({ title, timeframes, time }) {
   return (
     <Container color={title}>
       <StyledIMG
@@ -70,9 +128,15 @@ function Card({ title, timeframes }) {
         }
       />
       <Content>
-        <div>{title}</div>
-        <div>{timeframes.daily.current}</div>
-        <div>week</div>
+        <Text>
+          <Title>{title}</Title>
+          <Timer>
+            <Time>{timeframes.current}hrs</Time>
+            <TimeSpan>
+              Last {time} - {timeframes.previous}hrs
+            </TimeSpan>
+          </Timer>
+        </Text>
       </Content>
     </Container>
   );
