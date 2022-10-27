@@ -104,7 +104,7 @@ const Text = styled.div`
 
 interface UserCardProps {
   name: string;
-  hook: (value: number) => void;
+  hook: (value: string) => void;
   img: string;
 }
 
@@ -121,21 +121,21 @@ function UserCard({ img, name, hook }: UserCardProps) {
       <ButtonContent>
         <Button
           onClick={() => {
-            hook(0);
+            hook("daily");
           }}
         >
           Daily
         </Button>
         <Button
           onClick={() => {
-            hook(1);
+            hook("weekly");
           }}
         >
           Weekly
         </Button>
         <Button
           onClick={() => {
-            hook(2);
+            hook("monthly");
           }}
         >
           Monthly

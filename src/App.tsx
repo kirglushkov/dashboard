@@ -40,10 +40,25 @@ const Grid = styled.div`
 
 import Data from "../data.json";
 
-function App() {
-  const [active, setActive] = useState(0);
+type ObjectType = {
+  daily: {
+    current: string;
+    previous: string;
+  };
+  weekly: {
+    current: string;
+    previous: string;
+  };
+  monthly: {
+    current: string;
+    previous: string;
+  };
+};
 
-  function ChangeState(x: number) {
+function App() {
+  const [active, setActive] = useState("daily");
+
+  function ChangeState(x: string) {
     setActive(x);
   }
 
@@ -51,30 +66,20 @@ function App() {
     <Field>
       <UserCard hook={ChangeState} img={jeremy} name={"Jeremy Floyde"} />
       <Grid>
-        {Data.map((item, key) =>
-          active === 0 ? (
-            <Card
-              time={"Day"}
-              title={item.title}
-              timeframes={item.timeframes.daily}
-              key={key}
-            />
-          ) : active === 1 ? (
-            <Card
-              time={"Week"}
-              title={item.title}
-              timeframes={item.timeframes.weekly}
-              key={key}
-            />
-          ) : (
-            <Card
-              time={"Month"}
-              title={item.title}
-              timeframes={item.timeframes.monthly}
-              key={key}
-            />
-          )
-        )}
+        {Data.map((item, key) => (
+          <Card
+            time={
+              active === "daily"
+                ? "Day"
+                : active === "weekly"
+                ? "Week"
+                : "Month"
+            }
+            title={item.title}
+            timeframes={item.timeframes[active as keyof ObjectType]}
+            key={key}
+          />
+        ))}
       </Grid>
     </Field>
   );
